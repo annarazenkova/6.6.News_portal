@@ -7,6 +7,9 @@ class Author(models.Model):
     author = models.OneToOneField(User, on_delete=models.CASCADE)
     author_rating = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.author.username
+
     def update_rating(self):
         all_post_rating = Post.objects.filter(author_id=self.pk).aggregate(post_rating=Sum('post_rating'))['post_rating'] * 3
         author_comment_rating = Comment.objects.filter(user_id=self.author).aggregate(comment_rating=Sum('comment_rating'))['comment_rating']
@@ -18,6 +21,9 @@ class Author(models.Model):
 
 class Category(models.Model):
     name_category = models.CharField(max_length=124, unique=True)
+
+    def __str__(self):
+        return self.name_category
 
 
 article = 'A'
@@ -37,6 +43,9 @@ class Post(models.Model):
     content = models.TextField()
     post_rating = models.IntegerField(default=0)
 
+    def __str__(self):
+        return f'{self.title}:{self.content[:20]} ({self.time_in})'
+
     def like(self):
         self.post_rating += 1
         self.save()
@@ -52,6 +61,9 @@ class Post(models.Model):
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.category
 
 
 class Comment(models.Model):
@@ -69,3 +81,5 @@ class Comment(models.Model):
         self.comment_rating -= 1
         self.save()
 
+    def __str__(self):
+        return self.comment_text

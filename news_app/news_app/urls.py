@@ -20,4 +20,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('pages/', include('django.contrib.flatpages.urls')),
+    path('news/', include('news_portal.urls')),
+    path('news_one/', include('news_portal.urls')),
 ]
