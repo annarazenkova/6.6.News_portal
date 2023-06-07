@@ -18,7 +18,6 @@ Posts
                <td>time_in</td>
                <td>content</td>
            </tr>
-
            {% for post in news %}
            <tr>
                <td>{{ post.author|censor }}</td>
@@ -27,9 +26,9 @@ Posts
                <td>{{ post.content|truncatechars:20|censor }}</td>
            </tr>
            {% endfor %}
-
        </table>
    {% else %}
        <h2>No news published!</h2>
    {% endif %}
 {% endblock content %}
+
