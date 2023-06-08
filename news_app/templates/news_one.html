@@ -16,14 +16,12 @@ Post
                <td>content</td>
            </tr>
 
-           {% for post in news %}
            <tr>
-               <td>{{ post.author }}</td>
-               <td>{{ post.title }}</td>
-               <td>{{ post.time_in }}</td>
-               <td>{{ post.content|truncatechars:20 }}</td>
+               <td>{{ news_one.author }}</td>
+               <td>{{ news_one.title }}</td>
+               <td>{{ news_one.time_in|date:'d.m.Y' }}</td>
+               <td>{{ news_one.content|truncatechars:20 }}</td>
            </tr>
-           {% endfor %}
 
        </table>
    {% else %}

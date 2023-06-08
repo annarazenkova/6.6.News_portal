@@ -8,7 +8,7 @@ Posts
 
 {% block content %}
    <h2>All posts</h2>
-    <h3>{{ time_in|date:'M d Y' }}</h3>
+    <h3>{{ time_in|date:'d.m.Y' }}</h3>
    <hr>
    {% if news %}
        <table>
@@ -22,7 +22,7 @@ Posts
            <tr>
                <td>{{ post.author|censor }}</td>
                <td>{{ post.title|censor }}</td>
-               <td>{{ post.time_in }}</td>
+               <td>{{ post.time_in|date:'d.m.Y' }}</td>
                <td>{{ post.content|truncatechars:20|censor }}</td>
            </tr>
            {% endfor %}

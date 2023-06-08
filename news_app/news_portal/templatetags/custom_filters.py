@@ -13,6 +13,4 @@ def censor(word):
         for a in word.split():
             if a.capitalize() in censor_filter:
                 word = word.replace(a, a[0] + '*' * len(a))
-    else:
-        raise ValueError('censored')
     return word
