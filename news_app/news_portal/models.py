@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
+from django.urls import reverse
 
 
 class Author(models.Model):
@@ -43,9 +44,6 @@ class Post(models.Model):
     content = models.TextField()
     post_rating = models.IntegerField(default=0)
 
-    def __str__(self):
-        return f'{self.title}:{self.content[:20]} ({self.time_in})'
-
     def like(self):
         self.post_rating += 1
         self.save()
@@ -56,6 +54,12 @@ class Post(models.Model):
 
     def preview(self):
         return f'{self.content[0:124]}...'
+
+    def __str__(self):
+        return f'{self.title}:{self.content[:20]} ({self.time_in})'
+
+    def get_absolute_url(self):
+        return reverse('news_one', args=[str(self.id)])
 
 
 class PostCategory(models.Model):
