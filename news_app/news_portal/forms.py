@@ -15,3 +15,7 @@ class PostForm(forms.ModelForm):
         if title == content:
             raise ValidationError('The content shall differ from the title')
         return cleaned_data
+
+
+
+

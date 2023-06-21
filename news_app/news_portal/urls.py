@@ -14,3 +14,4 @@ urlpatterns = [
    path('article/<int:pk>/post_delete/', PostDelete.as_view()),
 
 ]
+

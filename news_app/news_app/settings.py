@@ -26,6 +26,10 @@ SECRET_KEY = 'django-insecure-vi#lal+ptd0c@cg_kt^c+g0z$hhvjo5de(jh57(05v&3%6-_op
 DEBUG = True
 
 ALLOWED_HOSTS = []
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
 
 # Application definition
@@ -42,6 +46,12 @@ INSTALLED_APPS = [
     'fpages',
     'news_portal',
     'django_filters',
+    'sign',
+    'protect',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 SITE_ID = 1
@@ -76,8 +86,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'news_app.wsgi.application'
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
-
+ACCOUNT_FORMS = {'signup': 'sign.models.BasicSignupForm'}
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
