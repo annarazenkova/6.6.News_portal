@@ -9,7 +9,7 @@ Search
     <h3>{{ time_in|date:'d.m.Y' }}</h3>
     <form action="" method="get">
         {{ filterset.form.as_p }}
-        <input type="submit" value="Найти"/>
+        <input type="submit" value="Search"/>
     </form>
     {% for post in search %}
      <div>

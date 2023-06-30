@@ -22,6 +22,13 @@ class Author(models.Model):
 
 class Category(models.Model):
     name_category = models.CharField(max_length=124, unique=True)
+    subscribers = models.ManyToManyField(User, related_name='category')
+
+    def get_subscribers(self):
+        return self.subscribers
+
+    def get_category(self):
+        return self.name_category
 
     def __str__(self):
         return self.name_category
@@ -87,4 +94,5 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment_text
+
 

@@ -1,10 +1,15 @@
 from datetime import datetime
+
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, get_object_or_404, render
+from django.template.loader import render_to_string
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
-from .models import Post
+from .models import Post, Category, User
 from .filters import PostFilter
 from .forms import PostForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, resolve
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.mail import send_mail, EmailMultiAlternatives
 
 
 class PostList(ListView):
@@ -83,6 +88,33 @@ class PostDelete(DeleteView, LoginRequiredMixin, PermissionRequiredMixin):
     template_name = 'post_delete.html'
     context_object_name = 'post_delete'
     success_url = reverse_lazy('news')
+
+
+
+@login_required
+def subscribe(request, pk):
+    user = request.user
+    category = Category.objects.get(id=pk)
+    category.subscribers.add(user)
+    message = 'You have successfully subscribed to the category:'
+    return render(request, 'subscribe.html', {'category': category, 'message': message})
+
+
+class PostCategory(ListView):
+    model = Post
+    template_name = 'category.html'
+    context_object_name = 'category_news'
+
+    def get_queryset(self):
+        self.category = get_object_or_404(Category, id=self.kwargs['pk'])
+        queryset = Post.objects.filter(category=self.category).order_by('-time_in')
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_not_subscriber'] = self.request.user not in self.category.subscribers.all()
+        context['category'] = self.category
+        return context
 
 
 
