@@ -60,6 +60,7 @@ DEFAULT_FROM_EMAIL = 'newsapp.test@yandex.ru'
 
 SITE_ID = 1
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -177,3 +178,9 @@ SERVER_EMAIL = 'newsapp.test@yandex.ru'  # это будет у нас вмес�
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
 
 APSCHEDULER_RUN_NOW_TIMEOUT = 25
+
+CELERY_BROKER_URL = 'redis://dafault:UnhS2QSk8DKfhRU07rx7PkceOllCx5G9@redis-11624.c293.eu-central-1-1.ec2.cloud.redislabs.com:11624'
+CELERY_RESULT_BACKEND = 'redis://default:UnhS2QSk8DKfhRU07rx7PkceOllCx5G9@redis-11624.c293.eu-central-1-1.ec2.cloud.redislabs.com:11624'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
