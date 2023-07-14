@@ -4,7 +4,7 @@ from django.dispatch import receiver
 from django.template.loader import render_to_string
 
 from .models import PostCategory
-from ..news_app import settings
+from news_app.settings import SITE_URL
 
 
 def send_notifications(preview, pk, title, subscribers):
@@ -12,7 +12,7 @@ def send_notifications(preview, pk, title, subscribers):
         'post.created_email.html',
         {
             'text': preview,
-            'link': f'{settings.SITE_URL}/news/{pk}',
+            'link': f'{SITE_URL}/news/{pk}',
         }
     )
 

@@ -1,5 +1,4 @@
 from django.apps import AppConfig
-from news_app.news_portal.signals import notify_about_new_post, send_notifications
 import redis
 
 
@@ -8,7 +7,7 @@ class NewsPortalConfig(AppConfig):
     name = 'news_portal'
 
     def ready(self):
-        notify_about_new_post, send_notifications
+        import news_portal.signals
 
 
 red = redis.Redis(

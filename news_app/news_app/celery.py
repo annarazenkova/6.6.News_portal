@@ -9,7 +9,8 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.conf.beat_schedule = {
     'action_every_monday_8am': {
         'task': 'news_portal.weekly_mail',
-        'schedule': crontab(hour=8, minute=0, day_of_week='monday'),
+        'schedule': crontab(minute='*/2')
+        #'schedule': crontab(hour=8, minute=0, day_of_week='monday'),
     },
 }
 
