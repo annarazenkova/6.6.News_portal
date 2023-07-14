@@ -10,6 +10,7 @@ from .forms import PostForm
 from django.urls import reverse_lazy, resolve
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.cache import cache
 
 
 class PostList(ListView):
@@ -35,6 +36,16 @@ class PostDetail(DetailView):
     template_name = 'news_one.html'
     context_object_name = 'news_one'
     pk_url_kwarg = 'pk'
+
+    def get_object(self, *args, **kwargs):  # переопределяем метод получения объекта, как ни странно
+        obj = cache.get(f'news_one-{self.kwargs["pk"]}',
+                        None)  # кэш очень похож на словарь, и метод get действует так же. Он забирает значение по ключу, если его нет, то забирает None.
+
+        # если объекта нет в кэше, то получаем его и записываем в кэш
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'news_one-{self.kwargs["pk"]}', obj)
+            return obj
 
 
 class SearchList(ListView):
